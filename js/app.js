@@ -1,13 +1,13 @@
 const display = document.getElementById("results");
 const buttons = document.getElementById("buttons");
-
+const dot = document.getElementById("dot");
 
 const add = (a, b) => a + b;
 const subtract = (a, b) => a - b;
 const multiply = (a, b) => a * b;
 const divide = (a, b) => {
     if (a === 0 || b === 0) {
-        return "Syntax Error"
+        return "ERROR";
     }
     return String(a/b).includes(".") ? (a/b).toFixed(7) : (a/b);
 };
@@ -38,6 +38,10 @@ buttons.addEventListener("click", (event) => {
 
         if (target.classList.contains("numbers")){
             operand = target.dataset.key;
+
+            if (display.textContent.includes(".")){
+                dot.disabled = true;
+            }
             if(result){
                 display.textContent = operand;   
                 result = ""; 
@@ -58,6 +62,12 @@ buttons.addEventListener("click", (event) => {
                 case "clear":
                     display.textContent = "";
                     break;
+                case "del": {
+                    const text = Array.from(display.textContent);
+                    text.pop();
+                    display.textContent = text.join("");
+                    break;
+                }
                 default:
                     operator = target.dataset.key;
                     console.log(operator)
