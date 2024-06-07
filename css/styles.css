@@ -29,9 +29,11 @@ body {
     max-width: 300px;
     background-color: var(--calc-clr);
     padding: 1em;
+    border-radius: 1em;
 }
 
 #results {
+    height: 100px;
     display: flex;
     background-color: var(--calc-clr);
 }
