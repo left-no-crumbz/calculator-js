@@ -15,6 +15,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 1.2rem;
 }
 
 .container {
@@ -49,10 +50,23 @@ body {
 .row > :first-child {
     flex: 2;
 }
+
 button {
     margin: 4px;
     border: 0;
     min-height: 50px;
     min-width: 50px;
-    border-radius: .5rem;
+    border-radius: .8rem;
+    background-color: var(--calc-clr);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: inherit;
+}
+
+#add,
+#subtract,
+#multiply,
+#divide,
+#equal {
+    color: orange;
 }
