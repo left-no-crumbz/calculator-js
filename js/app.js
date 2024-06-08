@@ -34,6 +34,8 @@ const operate = (a, operator, b) => {
 // TODO:
 // - CLEANUP
 // - CHECK EDGE CASES
+    // - continuous subtraction doesnt work.    
+    // - getting the modulus manually doesnt work (27 / 7 - 3);
 buttons.addEventListener("click", (event) => {
     const target = event.target;
     if (target.tagName === "BUTTON"){
@@ -43,9 +45,9 @@ buttons.addEventListener("click", (event) => {
             if (display.textContent.includes(".")){
                 dot.disabled = true;
             }
-            if(result){
+            if(result || result === 0){
                 display.textContent = operand;   
-                result = ""; 
+                result = "";
             } else {
                 display.textContent += operand;
             }
@@ -78,13 +80,15 @@ buttons.addEventListener("click", (event) => {
                     // console.log(leftOperand);
                     // console.log(operator);
                     rightOperand = +display.textContent;
+                    result = operate(+leftOperand, operator, +rightOperand);
                     console.log(`Left operand is: ${leftOperand}`);
                     console.log(`Right operand is: ${rightOperand}`);
-                    result = operate(+leftOperand, operator, +rightOperand);
                     console.log(`${leftOperand} ${operator} ${rightOperand} = ${result}`);
                     display.textContent = result;
                     leftOperand = result;
                     rightOperand = "";
+                    console.log(`New Left operand is: ${leftOperand}`);
+                    console.log(`New Right operand is: ${rightOperand}`);
                     break;
                 case "clear":
                     display.textContent = "";
@@ -100,13 +104,13 @@ buttons.addEventListener("click", (event) => {
                 }
                 default:
                     operator = target.dataset.key;
-                    console.log(`Left operand is: ${leftOperand}`);
-                    console.log(operator)
-                    console.log(`Right operand is: ${rightOperand}`);
-                    console.log("-------- FIRST -------------")
+                    // console.log(`Left operand is: ${leftOperand}`);
+                    // console.log(operator)
+                    // console.log(`Right operand is: ${rightOperand}`);
+                    // console.log("-------- FIRST -------------")
                     
 
-                    if (!leftOperand) {
+                    if (!leftOperand && leftOperand !== 0) {
                         console.log("There is no left operand, therefore lets use it.");
                         // operand = target.dataset.key;
                         // if (display.textContent.includes(".")){
@@ -139,7 +143,8 @@ buttons.addEventListener("click", (event) => {
                     console.log(operator)
                     console.log(`Right operand is: ${rightOperand}`);
                     console.log("-------- FIRST -------------")
-                    if (leftOperand && operator && rightOperand) {
+
+                    if (leftOperand !== null && operator !== null && rightOperand !== null) {
                         result = operate(+leftOperand, operator, +rightOperand);
                         console.log(`Left operand is: ${leftOperand}`);
                         console.log(`Right operand is: ${rightOperand}`);
@@ -147,9 +152,9 @@ buttons.addEventListener("click", (event) => {
                         display.textContent = result;
                         leftOperand = result;
                         rightOperand = "";
-                        // console.log(`New Left operand is: ${leftOperand}`);
-                        // console.log(`New Right operand is: ${rightOperand}`);
-                        // console.log(operator)
+                        console.log(`New Left operand is: ${leftOperand}`);
+                        console.log(`New Right operand is: ${rightOperand}`);
+                        console.log(operator)                        
                     }
 
                     break;
