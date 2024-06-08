@@ -12,7 +12,7 @@ const divide = (a, b) => {
     return String(a/b).includes(".") ? (a/b).toFixed(7) : (a/b);
 };
 
-const operand = "";
+let operand = "";
 let leftOperand = "";
 let operator = "";
 let rightOperand = "";
@@ -38,33 +38,16 @@ buttons.addEventListener("click", (event) => {
     const target = event.target;
     if (target.tagName === "BUTTON"){
         if (target.classList.contains("numbers")){
-            
-            if (!leftOperand) {
-                console.log("There is no left operand, therefore lets use it.");
-                leftOperand = target.dataset.key;
-                if (display.textContent.includes(".")){
-                    dot.disabled = true;
-                }
-                if(result){
-                    display.textContent = leftOperand;   
-                    result = ""; 
-                } else {
-                    display.textContent += leftOperand;
-                }
-                leftOperand = +display.textContent;
+        
+            operand = target.dataset.key;
+            if (display.textContent.includes(".")){
+                dot.disabled = true;
+            }
+            if(result){
+                display.textContent = operand;   
+                result = ""; 
             } else {
-                rightOperand = target.dataset.key;
-                console.log("There is no right operand, therefore lets use it.");
-                if (display.textContent.includes(".")){
-                    dot.disabled = true;
-                }
-                if(result){
-                    display.textContent = rightOperand;   
-                    result = ""; 
-                } else {
-                    display.textContent += rightOperand;
-                }
-                rightOperand = +display.textContent;
+                display.textContent += operand;
             }
 
             // if (display.textContent.includes(".")){
@@ -94,13 +77,20 @@ buttons.addEventListener("click", (event) => {
                     // console.log(rightOperand);
                     // console.log(leftOperand);
                     // console.log(operator);
+                    rightOperand = +display.textContent;
+                    console.log(`Left operand is: ${leftOperand}`);
+                    console.log(`Right operand is: ${rightOperand}`);
                     result = operate(+leftOperand, operator, +rightOperand);
+                    console.log(`${leftOperand} ${operator} ${rightOperand} = ${result}`);
                     display.textContent = result;
+                    leftOperand = result;
                     rightOperand = "";
-                    leftOperand = "";
                     break;
                 case "clear":
                     display.textContent = "";
+                    leftOperand = "";
+                    rightOperand = "";
+                    operator = "";
                     break;
                 case "del": {
                     const text = Array.from(display.textContent);
@@ -114,14 +104,46 @@ buttons.addEventListener("click", (event) => {
                     console.log(operator)
                     console.log(`Right operand is: ${rightOperand}`);
                     console.log("-------- FIRST -------------")
-                    display.textContent = "";
                     
 
+                    if (!leftOperand) {
+                        console.log("There is no left operand, therefore lets use it.");
+                        // operand = target.dataset.key;
+                        // if (display.textContent.includes(".")){
+                        //     dot.disabled = true;
+                        // }
+                        // if(result){
+                        //     display.textContent = operand;   
+                        //     result = ""; 
+                        // } else {
+                        //     display.textContent += operand;
+                        // }
+                        leftOperand = +display.textContent;
+                        display.textContent = "";
+                    } else {
+                        console.log("There is no right operand, therefore lets use it.");
+                        // operand = target.dataset.key;
+                        // if (display.textContent.includes(".")){
+                        //     dot.disabled = true;
+                        // }
+                        // if(result){
+                        //     display.textContent = operand;   
+                        //     result = ""; 
+                        // } else {
+                        //     display.textContent += operand;
+                        // }
+                        rightOperand = +display.textContent;
+                        display.textContent = "";
+                    }
+                    console.log(`Left operand is: ${leftOperand}`);
+                    console.log(operator)
+                    console.log(`Right operand is: ${rightOperand}`);
+                    console.log("-------- FIRST -------------")
                     if (leftOperand && operator && rightOperand) {
                         result = operate(+leftOperand, operator, +rightOperand);
-                        // console.log(`Left operand is: ${leftOperand}`);
-                        // console.log(`Right operand is: ${rightOperand}`);
-                        // console.log(`${leftOperand} ${operator} ${rightOperand} = ${result}`);
+                        console.log(`Left operand is: ${leftOperand}`);
+                        console.log(`Right operand is: ${rightOperand}`);
+                        console.log(`${leftOperand} ${operator} ${rightOperand} = ${result}`);
                         display.textContent = result;
                         leftOperand = result;
                         rightOperand = "";
