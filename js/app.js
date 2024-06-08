@@ -2,14 +2,14 @@ const display = document.getElementById("results");
 const buttons = document.getElementById("buttons");
 const dot = document.getElementById("dot");
 
-const add = (a, b) => a + b;
-const subtract = (a, b) => a - b;
-const multiply = (a, b) => a * b;
+const add = (a, b) => String(a + b).includes(".") ? (a + b).toFixed(2) : (a + b);
+const subtract = (a, b) => String(a - b).includes(".") ? (a - b).toFixed(2) : (a - b);
+const multiply = (a, b) => String(a * b).includes(".") ? (a * b).toFixed(2) : (a * b);
 const divide = (a, b) => {
     if (a === 0 || b === 0) {
         return "ERROR";
     }
-    return String(a/b).includes(".") ? (a/b).toFixed(7) : (a/b);
+    return String(a / b).includes(".") ? (a / b).toFixed(2) : (a / b);
 };
 
 let operand = "";
@@ -34,8 +34,8 @@ const operate = (a, operator, b) => {
 // TODO:
 // - CLEANUP
 // - CHECK EDGE CASES
-    // - continuous subtraction doesnt work.    
-    // - getting the modulus manually doesnt work (27 / 7 - 3);
+    // - continuous subtraction doesn't work.    
+    // - getting the modulus manually doesn't work (27 / 7 - 3);
 buttons.addEventListener("click", (event) => {
     const target = event.target;
     if (target.tagName === "BUTTON"){
@@ -82,11 +82,13 @@ buttons.addEventListener("click", (event) => {
                     rightOperand = +display.textContent;
                     result = operate(+leftOperand, operator, +rightOperand);
                     console.log(`Left operand is: ${leftOperand}`);
+                    console.log(operator)                        
                     console.log(`Right operand is: ${rightOperand}`);
                     console.log(`${leftOperand} ${operator} ${rightOperand} = ${result}`);
                     display.textContent = result;
                     leftOperand = result;
                     rightOperand = "";
+                    operator = "";
                     console.log(`New Left operand is: ${leftOperand}`);
                     console.log(`New Right operand is: ${rightOperand}`);
                     break;
@@ -109,8 +111,20 @@ buttons.addEventListener("click", (event) => {
                     // console.log(`Right operand is: ${rightOperand}`);
                     // console.log("-------- FIRST -------------")
                     
-
-                    if (!leftOperand && leftOperand !== 0) {
+                    // continuous operation w/o using the equal sign
+                    if (leftOperand !== "" && operator !== "" && rightOperand !== "") {
+                        result = operate(+leftOperand, operator, +rightOperand);
+                        console.log(`Left operand is: ${leftOperand}`);
+                        console.log(`Right operand is: ${rightOperand}`);
+                        console.log(`${leftOperand} ${operator} ${rightOperand} = ${result}`);
+                        display.textContent = result;
+                        leftOperand = result;
+                        rightOperand = "";
+                        operator = "";
+                        console.log(`New Left operand is: ${leftOperand}`);
+                        console.log(`New Right operand is: ${rightOperand}`);
+                        console.log(operator)                        
+                    } else if (!leftOperand && leftOperand !== 0) {
                         console.log("There is no left operand, therefore lets use it.");
                         // operand = target.dataset.key;
                         // if (display.textContent.includes(".")){
@@ -144,18 +158,7 @@ buttons.addEventListener("click", (event) => {
                     console.log(`Right operand is: ${rightOperand}`);
                     console.log("-------- FIRST -------------")
 
-                    if (leftOperand !== null && operator !== null && rightOperand !== null) {
-                        result = operate(+leftOperand, operator, +rightOperand);
-                        console.log(`Left operand is: ${leftOperand}`);
-                        console.log(`Right operand is: ${rightOperand}`);
-                        console.log(`${leftOperand} ${operator} ${rightOperand} = ${result}`);
-                        display.textContent = result;
-                        leftOperand = result;
-                        rightOperand = "";
-                        console.log(`New Left operand is: ${leftOperand}`);
-                        console.log(`New Right operand is: ${rightOperand}`);
-                        console.log(operator)                        
-                    }
+
 
                     break;
             }
