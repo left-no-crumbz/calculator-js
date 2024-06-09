@@ -12,7 +12,6 @@ const divide = (a, b) => {
     return String(a / b).includes(".") ? (a / b).toFixed(2) : (a / b);
 };
 
-let operand = "";
 let leftOperand = "";
 let operator = "";
 let rightOperand = "";
@@ -34,46 +33,57 @@ const operate = (a, operator, b) => {
 // TODO:
 // - CLEANUP
 // - CHECK EDGE CASES
-    // - double period is possible 
+
+function disableDot(operand) {
+    if (operand.includes(".")){
+        dot.disabled = true;
+    } else {
+        dot.disabled = false;
+    }
+}
+
+
 buttons.addEventListener("click", (event) => {
     const target = event.target;
     if (target.tagName === "BUTTON"){
         if (target.classList.contains("numbers")){
             if (!operator) {
+
                 if(result || result === 0){
+                    // if there is a result, this doesn't append the operand.
                     display.textContent = "";
                     result = "";
                     leftOperand = target.dataset.key;
                 }
                 leftOperand += target.dataset.key;
                 display.textContent = leftOperand;
+
+                disableDot(leftOperand);
                 
-                if (leftOperand.includes(".")){
-                    dot.disabled = true;
-                } else {
-                    dot.disabled = false;
-                }
                 console.log(leftOperand);
             } else {
+                
+                // TODO: refactor this 
+                
                 rightOperand = target.dataset.key;
+
                 if(result || result === 0){
+                    // if there is a result, this doesn't append the operand.
                     display.textContent = rightOperand;   
                     result = "";
                 } else {
                     display.textContent += rightOperand;
                 }
+
                 rightOperand = display.textContent;
-                if (rightOperand.includes(".")){
-                    dot.disabled = true;
-                } else {
-                    dot.disabled = false;
-                }
+
+                disableDot(rightOperand);
             }
 
         } else if (target.classList.contains("operation")) {
             switch (target.dataset.key) {
                 case "=":
-                    rightOperand = +display.textContent;
+                    // rightOperand = +display.textContent;
                     result = operate(+leftOperand, operator, +rightOperand);
                     display.textContent = result;
                     leftOperand = result;
