@@ -34,6 +34,7 @@ body {
     background-color: var(--calc-clr);
     padding: 1em;
     border-radius: 1em;
+    gap: .5em;
 }
 
 #results {
@@ -46,6 +47,7 @@ body {
     font-size: 2.5rem;
     font-weight: inherit;
     box-shadow: inset 0 0 5px 5px rgba(0, 0, 0, 0.3);
+    border-radius: .2em;
 }
 
 .buttons {
