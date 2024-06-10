@@ -102,9 +102,33 @@ function getResult() {
 	rightOperand = "";
 }
 
+buttons.addEventListener("mousedown", (event) => {
+    const target = event.target;
+    if (target.tagName === "BUTTON") {
+        target.style.boxShadow = "3px 3px 3px rgba(0, 0, 0, 0.3)";
+    }
+});
+
+buttons.addEventListener("mouseup", (event) => {
+    const target = event.target;
+    if (target.tagName === "BUTTON") {
+        target.style.boxShadow = "5px 5px 5px rgba(0, 0, 0, 0.5)";
+    }
+});
+
+buttons.addEventListener("mouseout", (event) => {
+    const target = event.target;
+    if (target.tagName === "BUTTON") {
+        target.style.boxShadow = "5px 5px 5px rgba(0, 0, 0, 0.5)";
+    }
+});
+
 buttons.addEventListener("click", (event) => {
 	const target = event.target;
 	if (target.tagName === "BUTTON") {
+
+        target.style.boxShadow = "3px 3px 3px rgba(0, 0, 0, 0.3)"; 
+        
 		if (target.classList.contains("numbers")) {
 			if (!operator) {
 				leftOperand = getOperand("left", target.dataset.key, result);
