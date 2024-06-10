@@ -19,6 +19,12 @@ let operator = "";
 let rightOperand = "";
 let result = "";
 
+
+const operands = {
+    left: "",
+    right: ""
+};
+
 const operate = (a, operator, b) => {
     switch(operator){
         case "+":
@@ -55,69 +61,32 @@ function clear(){
     result = "";
 }
 
+function getOperand(operandKey, targetKey, resultArg) {
+    if(resultArg || resultArg === 0){
+        // if there is a result, this doesn't append the operand.
+        display.textContent = "";
+        result = "";
+        operands[operandKey] = targetKey;
+    } else {
+        operands[operandKey] += targetKey;
+    }
+
+    display.textContent = operands[operandKey];
+
+    disableDot(operands[operandKey]);
+
+    return operands[operandKey];
+}
+
 
 buttons.addEventListener("click", (event) => {
     const target = event.target;
     if (target.tagName === "BUTTON"){
         if (target.classList.contains("numbers")){
-            if (!operator) {
-
-                if(result || result === 0){
-                    console.log("There is a result");
-                    // if there is a result, this doesn't append the operand.
-                    display.textContent = "";
-                    result = "";
-                    leftOperand = target.dataset.key;
-                } else {
-                    console.log("There is no result");
-                    leftOperand += target.dataset.key;
-                }
-
-                display.textContent = leftOperand;
-
-
-
-                disableDot(leftOperand);
-                
-                console.log(`Left operand is: ${leftOperand}`);
+            if (!operator) {         
+                leftOperand = getOperand("left", target.dataset.key, result);
             } else {
-                
-                // TODO: refactor this 
-                
-                    // rightOperand = target.dataset.key;
-
-                    // if(result || result === 0){
-                    //     // if there is a result, this doesn't append the operand.
-                    //     display.textContent = rightOperand;   
-                    //     result = "";
-
-                    // } else {
-                    //     display.textContent += rightOperand;
-                    // }
-
-                    // rightOperand = display.textContent;
-
-
-                if(result || result === 0){
-                    console.log("There is a result");
-                    // if there is a result, this doesn't append the operand.
-                    console.log(display.textContent);
-                    display.textContent = "";
-                    result = "";
-                    console.log(display.textContent);
-                    rightOperand = target.dataset.key;
-                    console.log(`Right operand is: ${rightOperand}`);
-                } else {
-                    console.log("There is no result");
-                    rightOperand += target.dataset.key;
-                }
-
-                        
-                display.textContent = rightOperand;
-
-                console.log(`Right operand is: ${rightOperand}`);
-
-                disableDot(rightOperand);
+                rightOperand = getOperand("right", target.dataset.key, result);
             }
 
         } else if (target.classList.contains("operation")) {
