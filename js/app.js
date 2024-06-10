@@ -44,7 +44,7 @@ const operate = (a, operator, b) => {
 // - CLEANUP
 // - CHECK EDGE CASES
 //   - Pressing the operation buttons first w/o operands creates bugs. 
-
+//   - Deleting a number and inserting one again will return the removed number.
 function disableDot(operand) {
     if (operand.includes(".")){
         dot.disabled = true;
@@ -54,11 +54,14 @@ function disableDot(operand) {
 }
 
 function clear(){
+    console.log("cleared");
     display.textContent = "";
     leftOperand = "";
     rightOperand = "";
     operator = "";
     result = "";
+    operands.left = ""
+    operands.right = "";
 }
 
 function getOperand(operandKey, targetKey, resultArg) {
@@ -70,11 +73,8 @@ function getOperand(operandKey, targetKey, resultArg) {
     } else {
         operands[operandKey] += targetKey;
     }
-
     display.textContent = operands[operandKey];
-
     disableDot(operands[operandKey]);
-
     return operands[operandKey];
 }
 
@@ -94,19 +94,29 @@ buttons.addEventListener("click", (event) => {
                 case "=":
                     // rightOperand = +display.textContent;
                     result = operate(+leftOperand, operator, +rightOperand);
-                    console.log(`Result is: ${result}`);
                     display.textContent = result;
                     leftOperand = result;
                     rightOperand = "";
-                    operator = "";
+                    // operator = "";
+
+                    console.log(`Result is: ${result}`);
                     break;
                 case "clear":
                     clear();
                     break;
                 case "del": {
-                    const text = Array.from(display.textContent);
-                    text.pop();
-                    display.textContent = text.join("");
+                    if (!operator) {
+                        console.log(`Left operand is: ${leftOperand}`);
+                        const text = Array.from(String(leftOperand));
+                        text.pop();
+                        leftOperand = text.join("");
+                        display.textContent = leftOperand;
+                    } else {
+                        const text = Array.from(rightOperand);
+                        text.pop();
+                        rightOperand = text.join("");
+                        display.textContent = rightOperand;
+                    }
                     break;
                 }
                 case "%":
@@ -121,11 +131,15 @@ buttons.addEventListener("click", (event) => {
                     console.log(`right operand is: ${rightOperand}`);
                     // continuous operation w/o using the equal sign
                     if (leftOperand !== "" && operator !== "" && rightOperand !== "") {
+                        
                         result = operate(+leftOperand, operator, +rightOperand);
-                        console.log(`Result is: ${result}`);
                         display.textContent = result;
                         leftOperand = result;
                         rightOperand = "";
+
+
+
+                        console.log(`Result is: ${result}`);
                         console.log(`New left operand is: ${leftOperand}`);
                         console.log(`New right operand is: ${rightOperand}`);
                     }
