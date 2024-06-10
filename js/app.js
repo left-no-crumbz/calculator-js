@@ -78,6 +78,14 @@ function getOperand(operandKey, targetKey, resultArg) {
     return operands[operandKey];
 }
 
+function deleteOperand(operand) {
+    console.log(`Left operand is: ${leftOperand}`);
+    const text = Array.from(String(operands[operand]));
+    text.pop();
+    operands[operand] = text.join("");
+    display.textContent = operands[operand];
+    return operands[operand];
+}
 
 buttons.addEventListener("click", (event) => {
     const target = event.target;
@@ -106,16 +114,9 @@ buttons.addEventListener("click", (event) => {
                     break;
                 case "del": {
                     if (!operator) {
-                        console.log(`Left operand is: ${leftOperand}`);
-                        const text = Array.from(String(leftOperand));
-                        text.pop();
-                        leftOperand = text.join("");
-                        display.textContent = leftOperand;
+                        leftOperand = deleteOperand("left");
                     } else {
-                        const text = Array.from(rightOperand);
-                        text.pop();
-                        rightOperand = text.join("");
-                        display.textContent = rightOperand;
+                        rightOperand = deleteOperand("right");
                     }
                     break;
                 }
